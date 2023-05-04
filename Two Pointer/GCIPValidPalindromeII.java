@@ -6,21 +6,41 @@
 import java.util.*;
 public class Main{
     public static boolean isPalindrome(String s) {
-        // Write your code here
-        // Tip: You may use the code template provided
-        // in the TwoPointers.java file
+        if (s == null || s.length() == 0) return false;
 
-        if(s == null || s.length() == 0) return false;
+        // two pointers; one at each end of the string s
+        int left = 0;
+        int right = s.length() - 1;
+        int mismatch = 0;
 
-        int mismatches = 0;
-        while(front < back) {
-            char frontChar = s.charAt(front);
-            char backChar = s.charAt(back);
-
-            if(mismatches > 1) return false;
-
+        while(left < right) {
+            if(mismatch > 1) return false;
+            char leftChar = s.charAt(left);
+            char rightChar = s.charAt(right);
+            
+            // T E B B E M
+            //     L R
+            // bad=1
+            if(leftChar != rightChar) {
+                mismatch++;
+                // skip the bad character
+                if(right > 0 && leftChar == s.charAt(right - 1)) {
+                    right--;
+                } else if (left < s.length() - 1 && rightChar == s.charAt(left + 1)) {
+                    left++;
+                } else {
+                    mismatch++;
+                    // move pointers towards the middle
+                    left++;
+                    right--;
+                }
+            } else {
+                // move pointers towards the middle
+                left++;
+                right--;
+            }
         }
-    
+
         return true;
     }
 }
