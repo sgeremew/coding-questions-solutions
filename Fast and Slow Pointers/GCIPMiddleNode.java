@@ -11,15 +11,6 @@ public class MiddleNode{
       LinkedListNode slow = head;
       LinkedListNode fast = head;
 
-      if (fast != null) {
-        fast = fast.next;
-        if (fast != null) {
-          fast = fast.next;
-        } else {
-          return slow;
-        }
-      }
-
       // h[ 3 ] null
       //    s   f   ret slow
 
@@ -30,16 +21,11 @@ public class MiddleNode{
       // h[ 3, 5, 2, 1] null
       //       s  
       //                f   ret slow.next
-      while(fast != null) {
+      while(fast != null && fast.next != null) {
         slow = slow.next;
-        fast = fast.next;
-        if(fast != null) {
-          fast = fast.next;
-        } else {
-          return slow;
-        }
+        fast = fast.next.next;
       }
 
-      return slow.next;
+      return slow;
   }
 }
