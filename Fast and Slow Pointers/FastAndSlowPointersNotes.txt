@@ -1,0 +1,23 @@
+/**
+Identify if repeatedly computing the sum of squares of the digits of number 19 results in 1
+
+n=19
+
+1^2 + 9^2 = 1+3 = 4
+4^2 = 16
+1^2 + 6^2 = 1 + 36 = 37
+3^2 + 7^2 = 9 + 49 = 58
+5^2 + 8^2 = 25 + 64 = 89****
+72 + 81 = 153
+1 + 25 + 9 = 35
+9 + 25 = 34
+9 + 16 = 25
+4 + 25 = 29
+4 + 81 = 85
+64 + 25 = 89**** a cycle -> stop here
+
+You can use Fast and Slow pointers approach to solve this sum of squares question.
+
+*/
+
+
