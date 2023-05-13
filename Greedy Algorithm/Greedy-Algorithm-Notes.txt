@@ -1,0 +1,10 @@
+Greedy Algorithm
+
+- optimization problems
+- solves problem piece by piece recursively
+- chooses locally optimal solution
+- lacks context of bigger picture
+- may complete with a non-optimal solution
+
+example problems
+traveling salesman, Prim's minimum spanning tree algorithm, Social networking websites (recommend friends using Dijkstra algo for shortest path between user connections)
