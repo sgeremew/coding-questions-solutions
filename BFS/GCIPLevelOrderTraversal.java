@@ -58,17 +58,90 @@ public class LevelOrderTraversal{
 
     */
 
-
+    // 24m 49s 5/16/2023
 
     public static String levelOrderTraversal(BinaryTreeNode root) {
-        if (root == null) return  "None";
+        if (root == null) return  "null";
 
-        Queue<BinaryTreeNode> level = new LinkedList<>();
+        Queue<BinaryTreeNode> current = new LinkedList<>();
+        Queue<BinaryTreeNode> next = new LinkedList<>();
         BinaryTreeNode node = root;
 
-        level.offer(node.left);
-        level.offer(node.right);
+        String result = "";
+        current.offer(node);
 
-        return "";
+        while(!current.isEmpty()) {
+            // traverse the queue
+            int length = current.size();
+            for(int i = 0; i < length; i++) {
+                BinaryTreeNode temp = current.poll();
+
+                // queue the children
+                if (temp.left != null) next.offer(temp.left);
+                if (temp.right != null) next.offer(temp.right);
+
+                // build the result
+                result += temp.data;
+
+                if(current.isEmpty() && !next.isEmpty()) {
+                     result += " : ";
+                } else if (!current.isEmpty()) {
+                    result += ", ";
+                }
+            }
+            System.out.println(result);
+
+            current.addAll(next);
+            next.clear();
+        }
+
+        return result;
+  }
+
+// version 2: optimized space - we know how big each level is since we store
+// all of the children
+  public static String levelOrderTraversal(BinaryTreeNode root) {
+    if (root == null) return  "null";
+
+    Queue<BinaryTreeNode> current = new LinkedList<>();
+    BinaryTreeNode node = root;
+
+    String result = "";
+    current.offer(node);
+
+    while(!current.isEmpty()) {
+        // traverse the queue
+        int length = current.size();
+        for(int i = 0; i < length; i++) {
+            BinaryTreeNode temp = current.poll();
+
+            // queue the children
+            if (temp.left != null) current.offer(temp.left);
+            if (temp.right != null) current.offer(temp.right);
+
+            // build the result
+            result += temp.data;
+
+            if(i == length - 1 && !current.isEmpty()) {
+                 result += " : ";
+            } else if (i != length - 1) {
+                result += ", ";
+            }
+        }
+        System.out.println(result);
+    }
+
+    return result;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
