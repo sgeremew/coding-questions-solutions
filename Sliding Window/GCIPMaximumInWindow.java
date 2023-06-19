@@ -1,4 +1,5 @@
 import java.util.*;
+//DEQUEUE APPROACH IS OPTIMAL!!!
 
 class SlidingWindowMaximum {
 	public static int[] findMaxSlidingWindow(int[] nums, int w) {
