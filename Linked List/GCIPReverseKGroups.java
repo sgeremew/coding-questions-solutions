@@ -27,6 +27,18 @@ i = 1
      t       p   c   n
 i = 2
 
+//////////////
+
+()   1 > 2 > 3 > 4 > 5 > ()
+p    c           n
+             h
+i=3
+first=false
+        reverse:: () < 1 < 2 < 3   4 > 5 > ()
+                       t       p   cn
+                  i=3
+
+
 
 */
 
@@ -47,9 +59,11 @@ i = 2
           firstGroup = false;
         }
         next = next.next;
-        prev = reverseGroup(prev, curr, k); // reverse group and store pointer in prev
+        LinkedListNode[] prevAndCurr = reverseGroup(prev, curr, k); // reverse group
+        prev = prevAndCurr[0];
         prev.next = next;
         curr = next;
+        i = 1;
       }
     }
 
@@ -61,7 +75,7 @@ i = 2
     LinkedListNode tail = curr;
     LinkedListNode next = curr;
 
-    for(int i = 0; i < k - 1 && curr != null; i++) {
+    for(int i = 0; i < k && curr != null; i++) {
       next = curr.next;
 
       curr.next = prev;
@@ -69,6 +83,73 @@ i = 2
       curr = next;
     }
 
-    return tail;
+    return new LinkedListNode[]{tail, prev};
   }
+
+
+
+//GCIP SOLUTION
+  public static LinkedListNode reverseKGroups(LinkedListNode head, int k) {
+    // create dummy node that where dumm.next is head
+    LinkedListNode dummy = new LinkedListNode(0);
+    dummy.next = head;
+    LinkedListNode ptr = dummy; // ptr to traverse list
+
+    while (ptr != null) {
+
+        LinkedListNode tracker = ptr;
+
+        // traverse 1 group
+        for (int i = 0; i < k; i++) {
+            if (tracker == null) {
+                break; // we reached end of list
+            }
+            tracker = tracker.next;
+        }
+
+        if (tracker == null) {
+            break; // we reached end of list
+        }
+
+        // ptr is the node just before the group we want to reverse
+        // ptr.next is the first node in the group we want to reverse
+        LinkedListNode[] updatedNodes = LinkedListReversal.reverseLinkedList(ptr.next, k);
+        LinkedListNode previous = updatedNodes[0]; // the head of the reversed group
+        LinkedListNode current = updatedNodes[1]; // the head of the right hand fragmented list
+
+        // ptr is the node just before the group we reversed
+        // ptr.next is the last node in the group we reversed
+        LinkedListNode lastNodeOfReversedGroup = ptr.next;
+        // link the last node of reversed group to the head of the right hand fragmented list
+        lastNodeOfReversedGroup.next = current;
+        ptr.next = previous; // ptr node points to head of reversed group
+        // update ptr to be the node just before our next (potential) group
+        ptr = lastNodeOfReversedGroup;
+
+    }
+
+    // dummy is just before the head
+    // dummy.next is the head
+    return dummy.next;
+  }
+
+  // reverse k nodes starting from given node
+  public static LinkedListNode[] reverseLinkedList(LinkedListNode node, int k){
+    
+    LinkedListNode previous = null;  
+    LinkedListNode current = node;  
+    LinkedListNode next = null;  
+
+    for (int i = 0; i < k; i++) {
+      next = current.next;  
+      current.next = previous;  
+      previous = current;  
+      current = next;
+    }
+
+    // return [head of reversed list, head of fragmented list]
+    return new LinkedListNode[]{previous, current}; 
+  }
+
+
 }
