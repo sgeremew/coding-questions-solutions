@@ -1,5 +1,7 @@
 import java.util.*;
 class Intersection {
+
+  // MY SOLUTION
   // Function to find the intersecting points between two intervals
   public static List <Interval> intervalsIntersection(List <Interval> listA, List <Interval> listB) {
     List <Interval> intersections = new ArrayList <>(); // to store all intersecting intervals
@@ -54,7 +56,34 @@ out=[ [2 4] [6 6] [7 8]]
       }
     }
 
-
     return intersections;
   }
+
+
+// GCIP SOLUTION
+    public static List<Interval> intervalsIntersection(List<Interval> intervalLista, List<Interval> intervalListb) {
+        List<Interval> intersections = new ArrayList<>(); // to store all intersecting intervals
+        // index "i" to iterate over the length of list a and index "j"
+        // to iterate over the length of list b
+        int i = 0, j = 0;
+        // while loop will break whenever either of the lists ends
+        while (i < intervalLista.size() && j < intervalListb.size()) {
+            // Let's check if intervalLista[i] intervalListb[j]
+            // 1. start - the potential startpoint of the intersection
+            // 2. end - the potential endpoint of the intersection
+            int start = Math.max(intervalLista.get(i).getStart(), intervalListb.get(j).getStart());
+            int end = Math.min(intervalLista.get(i).getEnd(), intervalListb.get(j).getEnd());
+            if (start <= end) // if this is an actual intersection
+                intersections.add(new Interval(start, end)); // add it to the list
+
+            // Move forward in the list whose interval ends earlier
+            if (intervalLista.get(i).getEnd() < intervalListb.get(j).getEnd())
+                i += 1;
+            else
+                j += 1;
+        }
+        return intersections;
+    }
+
+
 }
