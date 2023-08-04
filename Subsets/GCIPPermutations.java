@@ -1,51 +1,43 @@
 import java.util.*;
-public class Main {
+public class Main{
     /*
+         bad
+      abd   bda
+    adb.  dba
 
-    bad,  bda,  abd,  adb,  dab,  dba -- 6 permutations
-
-    probably want to convert String to charArray to make swaps easier
-
-
-    b  a  d
-    {}
-    0
-    ===
-    b  a  d
-    {}
-    1
-    ===
-    b  a  d
-    {}
-    2
-    ===
-    {'bad'}
-
+    bad >>curr=0;i=0; swap;
+        bad >>curr=1;i=1; swap;
+            bad >>curr=2;i=2; add word to perms ["bad",] and recurse up
+        bad >>cur=1;i=2; swap;
+            bda >>curr=2;i=2; add word to perms ["bad","bda"] and recurse up
+        loop done, recurse up
+    bad >>curr=0;i=1; swap;
+        abd >>curr=1;i=1; swap;
+            abd >>curr=2;i=2; add word to perms ["bad","bda","abd"] and recurse up
+            ...
+            ...
 
     */
-
     public static ArrayList<String> permuteWord(String word) {
-        ArrayList<String> permutations = new ArrayList<>();
-        backtrack(permutations, word, 0);
-        return permutations;
+        ArrayList<String> perms = new ArrayList<>();
+        backtrack(0, perms, word);
+        return perms;
     }
 
-    /** perform swaps recursively to obtain every permuations */
-    public static void backtrack(List<String> permutations, String word, int index) {
-        // if index is at the last character, add this permutation to the list
-        if (index == word.length() - 1) {
-            permutations.add(word);
+    /** recursion for permutations of given word */
+    public static void backtrack(int curr, List<String> perms, String word) {
+        if(curr == word.length() - 1) {
+            perms.add(word);
             return;
         } else {
-            //
-            for(int j = index; j < word.length(); j++) {
-                char[] swapped = swap(word, index, j);
-                backtrack(permutations, String.valueOf(swapped), index + 1);
+            for(int i = curr; i < word.length(); i++) {
+                char[] swapped = swap(word, curr, i);
+                backtrack(curr + 1, perms, String.valueOf(swapped));
             }
         }
     }
 
-    /** swap chars at position i and j */
+    /** swap characters at positions i and j in given word */ 
     public static char[] swap(String word, int i, int j) {
         char[] charArray = word.toCharArray();
         char temp = charArray[i];
