@@ -1,4 +1,6 @@
 public class JumpGame{
+
+   /** ITERATIVE APPROACH */
    public static boolean jumpGame(int[] nums) {
       if(nums.length == 1) return true;
 
@@ -18,6 +20,29 @@ public class JumpGame{
 
       return true;
    }
+
+
+   /**  BACKTRACKING APPROACH */
+   public static boolean jumpGame(int[] nums) {
+      return backtrack(nums, 0);
+   }
+
+   public static boolean backtrack(int[] nums, int index) {
+      if(index >= nums.length - 1) {
+         return true;
+      }
+
+      int num = nums[index];
+      boolean success = false;
+      for(int i = num; i > 0; i--) {
+         success = backtrack(nums, index + i);
+         if(success == true) {
+            return true;
+         }
+      }
+      return false;
+   }
+
 }
 
 // 15:30 time to solve
