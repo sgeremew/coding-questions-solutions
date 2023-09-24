@@ -8,9 +8,9 @@ public class Main{
         // we need to check with all queens
         // in current solution
         int oldRow =0, oldCol = 0, diagonalOffset = 0;
-        for (int i = 0; i<proposedRow; ++i) {
-            oldRow = i;
-            oldCol = solution.get(i);
+        for (int row = 0; row < proposedRow; ++row) {
+            oldRow = row;
+            oldCol = solution.get(row);
             diagonalOffset = proposedRow - oldRow;
             // oldCol == proposedCol --> Checks if there are any queens in the proposed column
             // oldCol == proposedCol - diagonalOffset --> Checks if there are any queens on the bottom left diagonal to the proposed place
@@ -23,16 +23,17 @@ public class Main{
     }
 
 
+    // when you have solved for n rows you have finished solving
     public static void nQueensSolver(int n, List<Integer> solution, int row, List<List<Integer>> results) {
         if (row == n) {
             results.add(solution);
             return;
         }
 
-        for (int i = 0; i<n; i++) {
-            boolean valid = isValidMove(row, i, solution);
+        for (int col = 0; col < n; col++) {
+            boolean valid = isValidMove(row, col, solution);
             if (valid) {
-                solution.set(row, i);
+                solution.set(row, col); // row has queen at col
                 nQueensSolver(n, solution, row + 1, results);
             } 
         }
